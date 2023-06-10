@@ -706,4 +706,5 @@ def main():
         open_output(output_filename).write(doc.toprettyxml(indent='  '))
         print()
 
-main()
+if __name__ == 'main':
+    main()
