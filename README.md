@@ -208,7 +208,7 @@ Checks if the quadcopter has flipped.
 `is_inside_workspace(self)`:
 Checks if the quadcopter is still inside the workspace.
 
-`reset_goal(self)`:
+`set_goal(self)`:
 Chooses a new goal.
 
 `compute_distance_to_target(self, a, b)`:
