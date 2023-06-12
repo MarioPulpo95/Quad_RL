@@ -169,7 +169,7 @@ Gets the linear and angular velocities from the odometry.
 `get_MotorsVel(self)`:
 Returns the motor speed values.
 
-¡check_get_pose_ready(self)`:
+`check_get_pose_ready(self)`:
 Checks if the topic /gazebo/model_states is ready to receive messages. Waits for the message until the topic is ready or the timeout expires.
 
 `check_get_motors_ready(self)`:
@@ -184,7 +184,7 @@ Resets the environment. Returns the quadcopter to the initial position, resets t
 `close(self)`:
 Closes the environment. Terminates the ROS and Gazebo nodes and closes all ROS communications.
 
-¡send_commands(self, w1, w2, w3, w4)`:
+send_commands(self, w1, w2, w3, w4)`:
 Sends speed commands to the drone's motors.
 
 `get_reward(self, done)`:
