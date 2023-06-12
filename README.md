@@ -15,13 +15,14 @@ $ curl -s https://raw.githubusercontent.com/ros/rosdistro/master/ros.asc | sudo 
 $ sudo apt update
 $ sudo apt install ros-noetic-desktop-full ros-noetic-joy ros-noetic-octomap-ros ros-noetic-mavlink
 $ sudo apt install ros-noetic-octomap-mapping ros-noetic-control-toolbox
-$ sudo apt install python3-vcstool python3-catkin-tools protobuf-compiler libgoogle-glog-dev python3-rosdep
-$ source /opt/ros/noetic/setup.bash
+$ sudo apt install python3-vcstool python3-catkin-tools protobuf-compiler libgoogle-glog-dev 
+$ sudo apt-get install python3-rosdep python3-wstool ros-noetic-ros libgoogle-glog-dev
+$ echo "source /opt/ros/noetic/setup.bash" >> ~/.bashrc
+$ source ~/.bashrc
 $ sudo rosdep init
 $ rosdep update
 $ echo "source /opt/ros/noetic/setup.bash" >> ~/.bashrc
 $ source ~/.bashrc
-$ sudo apt-get install python3-rosdep python3-wstool ros-noetic-ros libgoogle-glog-dev
 ```
 
 2. If you don't have ROS workspace yet you can do so by
