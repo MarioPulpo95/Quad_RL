@@ -28,7 +28,7 @@ $ source ~/.bashrc
 2. If you don't have ROS workspace yet you can do so by
 
 ```console
-$ export LD_PRELOAD=/usr/lib/aarch64-linux-gnu/libgomp.so.1mkdir -p ~/catkin_ws/src
+$ mkdir -p ~/catkin_ws/src
 $ cd ~/catkin_ws/src
 $ catkin_init_workspace  # initialize your catkin workspace
 $ cd ~/catkin_ws/
