@@ -69,7 +69,7 @@ class TestEnv(gym.Env):
 
         self.filecsv = 'RANDOMYAW_TEST.csv'
         self.dati = []
-        self.crea_file_csv()
+        self.make_csv()
         self.PositionController = PositionController()
         self.PositionController.init_PIDs()
     
@@ -287,7 +287,7 @@ class TestEnv(gym.Env):
         WZ = self.r
         
         self.dati = [self.crash, self.bonus, N_STEPS, DONE, ERRORE, X, Y, Z, VX, VY, VZ, X_GOAL, Y_GOAL, Z_GOAL, ROLL, PITCH, YAW, WX, WY, WZ, action[0],action[1],action[2], R1, R4, TOTAL_REW]
-        self.aggiungi_riga(self.dati)
+        self.add_row(self.dati)
         
         return self.reward, self.info, self.terminated
 
@@ -433,7 +433,7 @@ class TestEnv(gym.Env):
             velocities = np.array([w1,w2,w3,w4])
             #rospy.logwarn('Motors:{}'.format(np.array([velocities])))
 
-    def crea_file_csv(self):
+    def make_csv(self):
         rospack = rospkg.RosPack()
         pkg_path = rospack.get_path('rotors_gazebo')
         intestazioni = ['CRASH', 'GOAL', 'N_STEPS', 'DONE', 'ERRORE', 'X', 'Y', 'Z', 'VX', 'VY', 'VZ', 'X_GOAL', 'Y_GOAL', 'Z_GOAL', 'ROLL', 'PITCH', 'YAW', 'WX', 'WY', 'WZ','VX_ACTION', 'VY_ACTION', 'VZ_ACTION', 'DISTANCE_REW', 'TILT_REW', 'TOTAL_REW', 'X_REF', 'Y_REF', 'Z_REF']
@@ -443,7 +443,7 @@ class TestEnv(gym.Env):
             writer = csv.writer(file)
             writer.writerow(intestazioni)
 
-    def aggiungi_riga(self, dati):
+    def add_row(self, dati):
         with open(self.file_csv, 'a', newline='') as file:
             writer = csv.writer(file)
             writer.writerow(dati)
