@@ -59,9 +59,9 @@ class TiltEnv(gym.Env):
         self.commands_pub = rospy.Publisher('/ardrone/command/motor_speed', Actuators, queue_size=1)
         self.start_time =  None
 
-        '''self.filecsv = 'SAC4_notilt.csv'
+        self.filecsv = 'SAC4_notilt.csv'
         self.dati = []
-        self.crea_file_csv()'''
+        self.make_csv()
         self.PositionController = PositionController()
         self.PositionController.init_PIDs()
     
@@ -251,7 +251,7 @@ class TiltEnv(gym.Env):
         ERRORE = self.distance_to_goal
 
         self.dati = [TOTAL_REW, R1, R2, R3, R4, N_STEPS, DONE, ERRORE]
-        #self.aggiungi_riga(self.dati) # comment out to save stats in csv file
+        #self.add_row(self.dati) # comment out to save stats in csv file
         
         return self.reward, self.info, terminated
 
@@ -372,7 +372,7 @@ class TiltEnv(gym.Env):
             velocities = np.array([w1,w2,w3,w4])
             #rospy.logwarn('Motors:{}'.format(np.array([velocities])))
 
-    def crea_file_csv(self):
+    def make_csv(self):
         rospack = rospkg.RosPack()
         pkg_path = rospack.get_path('rotors_gazebo')
         intestazioni = ['TOTAL REWARD','TILT', 'CRASH', 'GOAL','DISTANCE' 'N_STEPS', 'DONE', 'ERRORE']
@@ -382,7 +382,7 @@ class TiltEnv(gym.Env):
             writer = csv.writer(file)
             writer.writerow(intestazioni)
 
-    def aggiungi_riga(self, dati):
+    def add_row(self, dati):
         with open(self.file_csv, 'a', newline='') as file:
             writer = csv.writer(file)
             writer.writerow(dati)
