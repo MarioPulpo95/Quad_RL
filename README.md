@@ -28,7 +28,7 @@ $ source ~/.bashrc
 2. If you don't have ROS workspace yet you can do so by
 
 ```console
-$ mkdir -p ~/catkin_ws/src
+$ export LD_PRELOAD=/usr/lib/aarch64-linux-gnu/libgomp.so.1mkdir -p ~/catkin_ws/src
 $ cd ~/catkin_ws/src
 $ catkin_init_workspace  # initialize your catkin workspace
 $ cd ~/catkin_ws/
@@ -53,6 +53,15 @@ $ catkin build
 ```console
 $ echo "source ~/catkin_ws/devel/setup.bash" >> ~/.bashrc
 $ source ~/.bashrc
+```
+5. Install Libraries
+
+```console
+$ pip install gym
+$ pip install stable_baselines3
+$ pip install tensorboard
+$ source ~/.bashrc
+$ export LD_PRELOAD=/usr/lib/aarch64-linux-gnu/libgomp.so.1
 ```
 
 > In the event the `cmd /opt/ros/melodic/lib/gazebo_ros/gzserver -u -e ode` appear, the solution proposed in [#40](https://github.com/gsilano/CrazyS/issues/40) temporany fixes the issue.
