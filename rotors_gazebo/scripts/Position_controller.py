@@ -146,8 +146,8 @@ class PositionController():
 
         return vx_rate, vy_rate
     
-    #def VelocityController(self, action, x, y, x_ref, y_ref, vx, vy, yaw): # se PID
-    def VelocityController(self, action, vx, vy, yaw, rand_yaw): # se RL
+    #def VelocityController(self, action, x, y, x_ref, y_ref, vx, vy, yaw): # if PID
+    def VelocityController(self, action, vx, vy, yaw, rand_yaw): # if RL
 
         #vx_ref, vy_ref = self.XYController(action, x, y, x_ref, y_ref, yaw)
 
