@@ -21,8 +21,6 @@ $ echo "source /opt/ros/noetic/setup.bash" >> ~/.bashrc
 $ source ~/.bashrc
 $ sudo rosdep init
 $ rosdep update
-$ echo "source /opt/ros/noetic/setup.bash" >> ~/.bashrc
-$ source ~/.bashrc
 ```
 
 2. If you don't have ROS workspace yet you can do so by
