@@ -59,7 +59,7 @@ $ git clone https://github.com/MarioPulpo95/Quad_RL
 ```
 6. Then go to `Quad_RL/rotors_gazebo/`
 
-copy `scripts` and `Training`
+copy `scripts` and `Training` folders
 
 Go to `Crazys/rotors_gazebo/` and remove `scripts` folder and paste my `scripts` and `Training` folders.
 
