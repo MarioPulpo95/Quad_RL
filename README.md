@@ -33,7 +33,7 @@ $ catkin_init_workspace  # initialize your catkin workspace
 $ cd ~/catkin_ws/
 $ catkin init
 $ cd ~/catkin_ws/src
-$ git clone -b dev/ros-noetic https://github.com/gsilano/CrazyS.git
+$ git clone https://github.com/MarioPulpo95/Quad_RL
 $ git clone -b med18_gazebo9 https://github.com/gsilano/mav_comm.git
 $ cd ~/catkin_ws
 ```
