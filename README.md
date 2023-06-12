@@ -223,5 +223,5 @@ Resets the motor speeds to zero.
 `make_csv(self)`:
 Creates a .csv file.
 
-`add_row(self, data):
+`add_row(self, data)`:
 Adds a row to the .csv file with the values in data.
