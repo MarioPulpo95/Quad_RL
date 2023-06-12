@@ -81,12 +81,10 @@ class TiltEnv(gym.Env):
         self.roll *= 100
         self.pitch *= 100
         self.yaw *= 100
-        return self.roll, self.pitch, self.yaw
     def get_Pose(self):
         self.x = self.odometry.pose[1].position.x*100
         self.y = self.odometry.pose[1].position.y*100
         self.z = self.odometry.pose[1].position.z*100
-        return self.x, self.y, self.z
     def get_Velocity(self):
         self.vx = self.odometry.twist[1].linear.x
         self.vy = self.odometry.twist[1].linear.y
@@ -94,7 +92,6 @@ class TiltEnv(gym.Env):
         self.p = self.odometry.twist[1].angular.x
         self.q = self.odometry.twist[1].angular.y
         self.r = self.odometry.twist[1].angular.z
-        return self.vx, self.vy, self.vz, self.p, self.q, self.r
     def get_MotorsVel(self):
         return self.mot0.data, self.mot1.data, self.mot2.data, self.mot3.data
     
@@ -390,8 +387,6 @@ class TiltEnv(gym.Env):
             writer = csv.writer(file)
             writer.writerow(dati)
 
-    def map_action(self,x, in_min, in_max, out_min, out_max):
-	    return ((((x - in_min) * (out_max - out_min)) / (in_max - in_min)) + out_min)
 
 if __name__ == '__main__':
     try:
