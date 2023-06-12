@@ -44,7 +44,7 @@ msg_act = Actuators()
 class TestEnv(gym.Env):
 
     def __init__(self):
-        self.action_space = spaces.Box(low = np.array([-0.5, -0.5, -1.0]), high =np.array([0.5, 0.5, 1.0]), shape=(N_ACTIONS,), dtype=np.float32) 
+        self.action_space = spaces.Box(low = np.array([-0.5, -0.5, -1.0]), high =np.array([0.5, 0.5, 1.0]), shape=(N_ACTIONS,), dtype=np.float64) 
 
         # NO-TILT ENV OBSERVATION
 
@@ -247,14 +247,12 @@ class TestEnv(gym.Env):
             if self.distance_to_goal < 0.15:
                 GOAL_BONUS = 100
                 self.reward = GOAL_BONUS
-                rospy.loginfo('GoaL:{}'.format(self.random_goal))
-                rospy.loginfo('Goal Reached')
+                rospy.logerr('Goal Reached')
                 rospy.loginfo('Error:{}'.format(self.distance_to_goal))
                 self.info['is_success'] = True
                 self.set_goal()
                 #self.waypoint_index = (self.waypoint_index + 1) % len(self.waypoints)
                 #self.set_new_waypoint()
-                rospy.loginfo('New Goal:{}'.format(self.random_goal))
 
             if self.counter_steps > LENGTH:
                 self.terminated = True
@@ -379,6 +377,7 @@ class TestEnv(gym.Env):
         z_goal = np.random.uniform(GOAL_MIN_Z, GOAL_MAX_Z)
 
         self.random_goal = np.array([x_goal, y_goal, z_goal])
+        rospy.loginfo('New Goal:{}'.format(self.random_goal))
 
     def set_new_waypoint(self):
         # SQUARE TRAJECTORY WAYPOINTS
@@ -389,6 +388,7 @@ class TestEnv(gym.Env):
         z_goal = self.waypoints[self.waypoint_index][2]
 
         self.random_goal = np.array([x_goal, y_goal, z_goal])
+        rospy.loginfo('New Goal:{}'.format(self.random_goal))
 
     def compute_distance_to_target(self,a,b):
         distance = np.linalg.norm(a-b)
