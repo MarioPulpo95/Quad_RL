@@ -54,7 +54,18 @@ $ catkin build
 $ echo "source ~/catkin_ws/devel/setup.bash" >> ~/.bashrc
 $ source ~/.bashrc
 ```
-5. Install Libraries
+5. Clone my repo
+```console
+$ cd ~/catkin_ws/src
+$ git clone https://github.com/MarioPulpo95/Quad_RL
+```
+Then go to `Quad_RL/rotors_gazebo/`
+copy `scripts` and `Training`
+Go to `Crazys/rotors_gazebo/` and remove `scripts` folder
+Then paste the folders
+Then go to `Quad_RL/rotors_gazebo/launch`
+copy `mav.launch`
+6. Install Libraries
 
 ```console
 $ pip install gym
