@@ -44,7 +44,7 @@ msg_act = Actuators()
 class TiltEnv(gym.Env):
 
     def __init__(self):
-        self.action_space = spaces.Box(low = np.array([-0.5, -0.5, -1.0]), high =np.array([0.5, 0.5, 1.0]), shape=(N_ACTIONS,), dtype=np.float32) 
+        self.action_space = spaces.Box(low = np.array([-0.5, -0.5, -1.0]), high =np.array([0.5, 0.5, 1.0]), shape=(N_ACTIONS,), dtype=np.float64) 
 
         low = np.array([-np.inf, -np.inf, -np.inf, -np.inf, -np.inf, -np.inf,-np.inf, -np.inf, -np.inf, -np.radians(180), -np.radians(180), -np.radians(180), 0, 0])
         high = np.array([ np.inf,  np.inf,  np.inf,  np.inf,  np.inf,  np.inf, np.inf, np.inf, np.inf, np.radians(180),  np.radians(180),  np.radians(180), 1, 1])
