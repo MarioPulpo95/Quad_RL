@@ -120,73 +120,108 @@ Code Documentation
 Libraries Imports
 
 `rospy` - Python library for ROS (Robot Operating System) programming.
+
 `tf.transformations` - Module for managing transformations between quaternions and Euler angles.
+
 `numpy` - Library for mathematical operations with multidimensional arrays.
+
 `gym` - Library for creating learning environments for reinforcement learning.
+
 `mav_msgs.msg` - Module for defining messages used for communication with the drone.
+
 `gym.envs.registration` - Module for registering new Gym environments.
 
-Definizione di alcune costanti:
+Constants definition:
 
 `N_ACTIONS` - Number of actions available to the agent.
+
 `SAMPLING_TIME` - Sampling interval for PID.
+
 `LENGTH` -  Maximum length of a training episode.
+
 `MIN_X, MAX_X, MIN_Y, MAX_Y, MIN_Z, MAX_Z` - Limits of the three-dimensional workspace in which the drone moves.
+
 `GOAL_MIN_X, GOAL_MAX_X, GOAL_MIN_Y, GOAL_MAX_Y, GOAL_MIN_Z, GOAL_MAX_Z` -  Limits for generating a random goal position.
 
-Definizione della classe Env:
+Class Env definition:
 
-__Init__(self) 
-Inizializza l'ambiente, definendo lo spazio delle azioni e lo spazio delle osservazioni (‘spaces.Box’ = spazi continui)
-Motor2_callback(self, data)
-Funzione di callback chiamata quando viene ricevuto un messaggio sul topic /ardrone/motor_speed/2. Aggiorna il valore del motore 2.
-Motor3_callback(self, data)
-Funzione di callback chiamata quando viene ricevuto un messaggio sul topic /ardrone/motor_speed/3. Aggiorna il valore del motore 3.
-Odometry_callback(self, data)
-Funzione di callback chiamata quando viene ricevuto un messaggio sul topic /gazebo/model_states. Aggiorna i dati dell'odomotria.
-get_RPY(self)
-Ottiene i valori di roll, pitch e yaw dall'odometria.
-get_Pose(self)
-Ottiene le coordinate x, y, z dall'odometria.
-get_Velocity(self)
-Ottiene le velocità lineari e angolari dall'odometria.
-get_MotorsVel(self)
-Restituisce i valori di velocità dei motori.
-check_get_pose_ready(self)
-Controlla se il topic /gazebo/model_states è pronto a ricevere messaggi. Attende il messaggio fino a quando il topic è pronto o scade il timeout.
-check_get_motors_ready(self)
-Controlla se i topic /ardrone/motor_speed/0, /ardrone/motor_speed/1, /ardrone/motor_speed/2, /ardrone/motor_speed/3 sono pronti a ricevere messaggi. Attende i messaggi fino a quando i topic sono pronti o scade il timeout.
-step(self, action)
-Esegue un passo nell'ambiente. Applica il controllo di volo in base all'azione ricevuta e raccoglie le osservazioni, la ricompensa e lo stato di terminazione.
-reset(self)
-Resetta l'ambiente. Riporta il drone alla posizione iniziale, reimposta le variabili di stato e genera un nuovo obiettivo.
-close(self)
-Chiude l'ambiente. Termina i nodi ROS e Gazebo e chiude tutte le comunicazioni ROS.
-send_commands(self, w1, w2, w3, w4)
-Invia i comandi di velocità ai motori del drone.
-get_reward(self, done)
-Calcola la ricompensa in base allo stato di done.
-get_observation(self)
-Ottiene le osservazioni correnti dall’ambiente.
-set_quad_pose(self)
-Imposta la posizione iniziale del drone nel simulatore Gazebo.
-is_done(self)
-Verifica se l'episodio è terminato in base a condizioni come il crash o la lunghezza massima dell’episodio.
-is_goal_reached(self)
-Verifica se è stato raggiunto il goal
-has_flipped(self)
-Verifica se il quadricottero si è capovolto
-is_inside_workspace(self)
-Verifica se il quadricottero si trova ancora nel workspace
-reset_goal(self)
-Sceglie un nuovo goal
-compute_distance_to_target(self, a,b)
-Calcolo della distanza euclidea tra due punti
-reset_variables(self)
-Azzera le variabili all’inizio dell’episodio
-reset_motors(self)
-Azzera la velocità dei motori
-make_csv(self)
-Crea un file .csv
-add_row(self, dati)
-Aggiunge una riga al file .csv con valori in dati 
+`init(self)`:
+Initializes the environment, defining the action space and observation space ('spaces.Box' = continuous spaces).
+
+`Motor2_callback(self, data)`:
+Callback function called when a message is received on the topic /ardrone/motor_speed/2. Updates the value of motor 2.
+
+`Motor3_callback(self, data)`:
+Callback function called when a message is received on the topic /ardrone/motor_speed/3. Updates the value of motor 3.
+
+`Odometry_callback(self, data)`:
+Callback function called when a message is received on the topic /gazebo/model_states. Updates the odometry data.
+
+`get_RPY(self)`:
+Gets the roll, pitch, and yaw values from the odometry.
+
+`get_Pose(self)`:
+Gets the x, y, and z coordinates from the odometry.
+
+`get_Velocity(self)`:
+Gets the linear and angular velocities from the odometry.
+
+`get_MotorsVel(self)`:
+Returns the motor speed values.
+
+¡check_get_pose_ready(self)`:
+Checks if the topic /gazebo/model_states is ready to receive messages. Waits for the message until the topic is ready or the timeout expires.
+
+`check_get_motors_ready(self)`:
+Checks if the topics /ardrone/motor_speed/0, /ardrone/motor_speed/1, /ardrone/motor_speed/2, /ardrone/motor_speed/3 are ready to receive messages. Waits for the messages until the topics are ready or the timeout expires.
+
+`step(self, action)`:
+Performs a step in the environment. Applies the flight control based on the received action and collects the observations, reward, and termination status.
+
+`reset(self)`:
+Resets the environment. Returns the quadcopter to the initial position, resets the state variables, and generates a new goal.
+
+`close(self)`:
+Closes the environment. Terminates the ROS and Gazebo nodes and closes all ROS communications.
+
+¡send_commands(self, w1, w2, w3, w4)`:
+Sends speed commands to the drone's motors.
+
+`get_reward(self, done)`:
+Calculates the reward based on the termination status.
+
+`get_observation(self)`:
+Gets the current observations from the environment.
+
+`set_quad_pose(self)`:
+Sets the initial position of the drone in the Gazebo simulator.
+
+`is_done(self)`:
+Checks if the episode is done based on conditions such as a crash or the maximum episode length.
+
+`is_goal_reached(self)`:
+Checks if the goal has been reached.
+
+`has_flipped(self)`:
+Checks if the quadcopter has flipped.
+
+`is_inside_workspace(self)`:
+Checks if the quadcopter is still inside the workspace.
+
+`reset_goal(self)`:
+Chooses a new goal.
+
+`compute_distance_to_target(self, a, b)`:
+Calculates the Euclidean distance between two points.
+
+`reset_variables(self)`:
+Resets the variables at the beginning of the episode.
+
+`reset_motors(self)`:
+Resets the motor speeds to zero.
+
+`make_csv(self)`:
+Creates a .csv file.
+
+`add_row(self, data):
+Adds a row to the .csv file with the values in data.
