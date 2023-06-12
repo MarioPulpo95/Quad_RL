@@ -73,8 +73,6 @@ $ source ~/.bashrc
 $ export LD_PRELOAD=/usr/lib/aarch64-linux-gnu/libgomp.so.1
 ```
 
-
-
 Basic Usage
 -----------
 Launch simulation with `mav.launch` located in /rotors_gazebo/launch/
@@ -116,3 +114,79 @@ $ rosrun quadv2.py
 You can analyze the train and test results in `plot_notebook.py`
 
 The PositionController is located in `/rotor_gazebo/scripts/Position_controller.py`
+
+Code Documentation
+------------------
+Libraries Imports
+
+`rospy` - Python library for ROS (Robot Operating System) programming.
+`tf.transformations` - Module for managing transformations between quaternions and Euler angles.
+`numpy` - Library for mathematical operations with multidimensional arrays.
+`gym` - Library for creating learning environments for reinforcement learning.
+`mav_msgs.msg` - Module for defining messages used for communication with the drone.
+`gym.envs.registration` - Module for registering new Gym environments.
+
+Definizione di alcune costanti:
+
+`N_ACTIONS` - Number of actions available to the agent.
+`SAMPLING_TIME` - Sampling interval for PID.
+`LENGTH` -  Maximum length of a training episode.
+`MIN_X, MAX_X, MIN_Y, MAX_Y, MIN_Z, MAX_Z` - Limits of the three-dimensional workspace in which the drone moves.
+`GOAL_MIN_X, GOAL_MAX_X, GOAL_MIN_Y, GOAL_MAX_Y, GOAL_MIN_Z, GOAL_MAX_Z` -  Limits for generating a random goal position.
+
+Definizione della classe Env:
+
+__Init__(self) 
+Inizializza l'ambiente, definendo lo spazio delle azioni e lo spazio delle osservazioni (‘spaces.Box’ = spazi continui)
+Motor2_callback(self, data)
+Funzione di callback chiamata quando viene ricevuto un messaggio sul topic /ardrone/motor_speed/2. Aggiorna il valore del motore 2.
+Motor3_callback(self, data)
+Funzione di callback chiamata quando viene ricevuto un messaggio sul topic /ardrone/motor_speed/3. Aggiorna il valore del motore 3.
+Odometry_callback(self, data)
+Funzione di callback chiamata quando viene ricevuto un messaggio sul topic /gazebo/model_states. Aggiorna i dati dell'odomotria.
+get_RPY(self)
+Ottiene i valori di roll, pitch e yaw dall'odometria.
+get_Pose(self)
+Ottiene le coordinate x, y, z dall'odometria.
+get_Velocity(self)
+Ottiene le velocità lineari e angolari dall'odometria.
+get_MotorsVel(self)
+Restituisce i valori di velocità dei motori.
+check_get_pose_ready(self)
+Controlla se il topic /gazebo/model_states è pronto a ricevere messaggi. Attende il messaggio fino a quando il topic è pronto o scade il timeout.
+check_get_motors_ready(self)
+Controlla se i topic /ardrone/motor_speed/0, /ardrone/motor_speed/1, /ardrone/motor_speed/2, /ardrone/motor_speed/3 sono pronti a ricevere messaggi. Attende i messaggi fino a quando i topic sono pronti o scade il timeout.
+step(self, action)
+Esegue un passo nell'ambiente. Applica il controllo di volo in base all'azione ricevuta e raccoglie le osservazioni, la ricompensa e lo stato di terminazione.
+reset(self)
+Resetta l'ambiente. Riporta il drone alla posizione iniziale, reimposta le variabili di stato e genera un nuovo obiettivo.
+close(self)
+Chiude l'ambiente. Termina i nodi ROS e Gazebo e chiude tutte le comunicazioni ROS.
+send_commands(self, w1, w2, w3, w4)
+Invia i comandi di velocità ai motori del drone.
+get_reward(self, done)
+Calcola la ricompensa in base allo stato di done.
+get_observation(self)
+Ottiene le osservazioni correnti dall’ambiente.
+set_quad_pose(self)
+Imposta la posizione iniziale del drone nel simulatore Gazebo.
+is_done(self)
+Verifica se l'episodio è terminato in base a condizioni come il crash o la lunghezza massima dell’episodio.
+is_goal_reached(self)
+Verifica se è stato raggiunto il goal
+has_flipped(self)
+Verifica se il quadricottero si è capovolto
+is_inside_workspace(self)
+Verifica se il quadricottero si trova ancora nel workspace
+reset_goal(self)
+Sceglie un nuovo goal
+compute_distance_to_target(self, a,b)
+Calcolo della distanza euclidea tra due punti
+reset_variables(self)
+Azzera le variabili all’inizio dell’episodio
+reset_motors(self)
+Azzera la velocità dei motori
+make_csv(self)
+Crea un file .csv
+add_row(self, dati)
+Aggiunge una riga al file .csv con valori in dati 
