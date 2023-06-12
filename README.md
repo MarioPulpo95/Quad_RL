@@ -69,7 +69,6 @@ $ git clone https://github.com/MarioPulpo95/Quad_RL
 $ pip install gym
 $ pip install stable_baselines3
 $ pip install tensorboard
-$ pip install rospkg
 $ source ~/.bashrc
 $ export LD_PRELOAD=/usr/lib/aarch64-linux-gnu/libgomp.so.1
 ```
