@@ -57,11 +57,11 @@ $ source ~/.bashrc
 $ cd ~/catkin_ws/src
 $ git clone https://github.com/MarioPulpo95/Quad_RL
 ```
-6. Then go to `Quad_RL/rotors_gazebo/` and copy `scripts` and `Training` folders
-7. Go to `Crazys/rotors_gazebo/` remove `scripts` folder and paste my `scripts` and `Training` folders.
-8. Then go to `Quad_RL/rotors_gazebo/launch` and copy `mav.launch`
+6. Go to `Quad_RL/rotors_gazebo/`, copy `scripts` and `Training` folders
+7. Go to `Crazys/rotors_gazebo/`, remove `scripts` folder and paste my `scripts` and `Training` folders.
+8. Go to `Quad_RL/rotors_gazebo/launch` and copy `mav.launch`
 9. Go to `Crazys/rotors_gazebo/launch`remove `mav.launch` file and paste my `mav.launch` file.
-10. Then go to `Quad_RL/rotors_description` and open `ardrone.xacro` and modify the <xacro:property name="rotor_velocity_slowdown_sim" value="10" /> with value="1".
+10. Go to `Quad_RL/rotors_description`, open `ardrone.xacro` and modify the <xacro:property name="rotor_velocity_slowdown_sim" value="10" /> with value="1".
 
 6. Install Libraries
 
