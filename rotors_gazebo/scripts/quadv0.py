@@ -391,9 +391,6 @@ class NoTiltEnv(gym.Env):
             writer = csv.writer(file)
             writer.writerow(dati)
 
-    def map_action(self,x, in_min, in_max, out_min, out_max):
-	    return ((((x - in_min) * (out_max - out_min)) / (in_max - in_min)) + out_min)
-
 if __name__ == '__main__':
     try:
         rospy.init_node('quadcopter_training', anonymous=True)
