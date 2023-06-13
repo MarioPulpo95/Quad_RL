@@ -66,7 +66,6 @@ $ git clone https://github.com/MarioPulpo95/Quad_RL
 6. Install Libraries
 
 ```console
-$ pip install gym
 $ pip install stable_baselines3
 $ pip install tensorboard
 $ echo "export LD_PRELOAD=/usr/lib/aarch64-linux-gnu/libgomp.so.1" >> ~/.bashrc
