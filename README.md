@@ -108,7 +108,7 @@ In `load()` function use 'Quad-v2' inside gym.make() function
 
 ```console
 $ roslaunch rotors_gazebo mav.launch
-$ rosrun quadv2.py
+$ rosrun rotors_gazebo quadv2.py
 ```
 You can analyze the train and test results in `plot_notebook.py`
 
