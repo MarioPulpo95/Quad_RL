@@ -146,15 +146,15 @@ class PositionController():
 
         return vx_rate, vy_rate
     
-    #def VelocityController(self, action, x, y, x_ref, y_ref, vx, vy, yaw): # if PID
-    def VelocityController(self, action, vx, vy, yaw, rand_yaw): # if RL
+    def VelocityController(self,x,y,x_ref, y_ref, vx, vy, yaw): # if PID
+    #def VelocityController(self, action, vx, vy, yaw, rand_yaw): # if RL
 
-        #vx_ref, vy_ref = self.XYController(action, x, y, x_ref, y_ref, yaw)
+        vx_ref, vy_ref = self.XYController(x, y, x_ref, y_ref, yaw)
 
-        vx_ref = action[0]
-        vy_ref = action[1]
-        #yaw_ref = 0.0
-        yaw_ref = rand_yaw*100 # if start with rand_yaw
+        #vx_ref = action[0]
+        #vy_ref = action[1]
+        yaw_ref = 0.0
+        #yaw_ref = rand_yaw*100 # if start with rand_yaw
 
         self.vx_pid.SetPoint = vx_ref
         self.vy_pid.SetPoint = vy_ref
@@ -186,8 +186,8 @@ class PositionController():
         yaw_rate = self.yaw_rate_pid.update(error_yaw, current_time = None)
         yaw_rate = np.clip(yaw_rate,-MAX_YAW_COMMAND, MAX_YAW_COMMAND)
 
-        pitch_rate = pitch_rate*np.cos(rand_yaw) + roll_rate*np.sin(rand_yaw)  # if start with random yaw
-        roll_rate = -pitch_rate*np.sin(rand_yaw) + roll_rate*np.cos(rand_yaw)
+        #pitch_rate = pitch_rate*np.cos(rand_yaw) + roll_rate*np.sin(rand_yaw)  # if start with random yaw
+        #roll_rate = -pitch_rate*np.sin(rand_yaw) + roll_rate*np.cos(rand_yaw)
 
         return -roll_rate, pitch_rate, yaw_rate
 
@@ -207,12 +207,12 @@ class PositionController():
 
         return vz_ref
     
-    #def ZVelocityController(self,action,z_ref, z, vz): # se PID
-    def ZVelocityController(self,action,vz): # se RL
+    def ZVelocityController(self,z_ref, z, vz): # se PID
+    #def ZVelocityController(self,action,vz): # se RL
 
-        #self.vz_pid.SetPoint = self.AltitudeController(z_ref, z)
+        self.vz_pid.SetPoint = self.AltitudeController(z_ref, z)
 
-        self.vz_pid.SetPoint = action[2]
+        #self.vz_pid.SetPoint = action[2]
         #self.vz_pid.SetPoint = 1
 
         feedback_vz = vz

@@ -44,7 +44,7 @@ msg_act = Actuators()
 class TestEnv(gym.Env):
 
     def __init__(self):
-        self.action_space = spaces.Box(low = np.array([-0.5, -0.5, -1.0]), high =np.array([0.5, 0.5, 1.0]), shape=(N_ACTIONS,), dtype=np.float64) 
+        self.action_space = spaces.Box(low = np.array([-0.5, -0.5, -1.0]), high =np.array([0.5, 0.5, 1.0]), shape=(N_ACTIONS,), dtype=np.float32) 
 
         # NO-TILT ENV OBSERVATION
 
@@ -69,7 +69,7 @@ class TestEnv(gym.Env):
 
         self.filecsv = 'RANDOMYAW_TEST.csv'
         self.dati = []
-        self.make_csv()
+        #self.make_csv()
         self.PositionController = PositionController()
         self.PositionController.init_PIDs()
     
@@ -169,9 +169,13 @@ class TestEnv(gym.Env):
                     rospy.sleep(SAMPLING_TIME - delay)
                     #rospy.logwarn('delay:{}'.format(SAMPLING_TIME - delay))
             self.get_Velocity()
-            thrust_cmd = self.PositionController.ZVelocityController(action, self.vz)
+            self.get_Pose() # if PID
+            thrust_cmd = self.PositionController.ZVelocityController(z_ref = 200, z = self.z, vz = self.vz) # if PID
+            #thrust_cmd = self.PositionController.ZVelocityController(action, self.vz)
+            self.get_Pose() # if PID
             self.get_Velocity()
-            roll_ref, pitch_ref, yaw_ref = self.PositionController.VelocityController(action,self.vx, self.vy, self.yaw, self.random_yaw)
+            roll_ref, pitch_ref, yaw_ref = self.PositionController.VelocityController(x = self.x, y = self.y, x_ref = 200, y_ref = 100, vx = self.vx, vy = self.vy, yaw = self.yaw) # if PID
+            #roll_ref, pitch_ref, yaw_ref = self.PositionController.VelocityController(action,self.vx, self.vy, self.yaw, self.random_yaw)
             self.get_RPY()
             self.get_Velocity()
             roll_cmd, pitch_cmd, yaw_cmd = self.PositionController.AttitudeController(roll_ref, pitch_ref, yaw_ref, self.roll, self.pitch, self.r)
@@ -199,7 +203,7 @@ class TestEnv(gym.Env):
         self.set_goal() # random goals
         #self.set_new_waypoint() # waypoints goals
         self.reset_motors()
-        self.set_quad_pose() # to start with random yaw -> set Position controller too
+        #self.set_quad_pose() # to start with random yaw -> set Position controller too
         self.PositionController.reset_PIDs()
         ros_gazebo.gazebo_pause_physics()
         observation = self.get_observation()
@@ -260,7 +264,7 @@ class TestEnv(gym.Env):
         
         self.cumulated_reward += self.reward
 
-        R1 = DISTANCE_REWARD
+        '''R1 = DISTANCE_REWARD
         self.crash = CRASH_PENALTY
         self.bonus = GOAL_BONUS
         R4 = TILT_PENALTY
@@ -285,7 +289,7 @@ class TestEnv(gym.Env):
         WZ = self.r
         
         self.dati = [self.crash, self.bonus, N_STEPS, DONE, ERRORE, X, Y, Z, VX, VY, VZ, X_GOAL, Y_GOAL, Z_GOAL, ROLL, PITCH, YAW, WX, WY, WZ, action[0],action[1],action[2], R1, R4, TOTAL_REW]
-        self.add_row(self.dati)
+        self.add_row(self.dati)'''
         
         return self.reward, self.info, self.terminated
 
@@ -312,11 +316,11 @@ class TestEnv(gym.Env):
             crash = 0
         
         # TILT ENV OBS
-        '''obs = np.array([error_x, error_y, error_z, 
+        obs = np.array([error_x, error_y, error_z, 
                         self.vx, self.vy, self.vz,
                         self.p, self.q, self.r,
                         self.roll/100, self.pitch/100, self.yaw/100, 
-                        goal_reached, crash])'''
+                        goal_reached, crash])
         
         # NO TILT ENV OBS
         '''obs = np.array([error_x, error_y, error_z, 
@@ -325,11 +329,11 @@ class TestEnv(gym.Env):
                         goal_reached, crash])'''
         
         # RANDOM YAW OBS
-        obs = np.array([error_x, error_y, error_z, 
+        '''obs = np.array([error_x, error_y, error_z, 
                         self.vx, self.vy, self.vz,
                         self.p, self.q, self.r,
                         self.roll/100, self.pitch/100, self.random_yaw - self.yaw/100,
-                        goal_reached, crash])
+                        goal_reached, crash])'''
         #rospy.logerr("Observations:{}".format(np.array([obs])))
         return obs
     
@@ -377,7 +381,7 @@ class TestEnv(gym.Env):
         z_goal = np.random.uniform(GOAL_MIN_Z, GOAL_MAX_Z)
 
         self.random_goal = np.array([x_goal, y_goal, z_goal])
-        rospy.loginfo('New Goal:{}'.format(self.random_goal))
+        #rospy.loginfo('New Goal:{}'.format(self.random_goal))
 
     def set_new_waypoint(self):
         # SQUARE TRAJECTORY WAYPOINTS

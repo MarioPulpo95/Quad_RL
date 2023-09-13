@@ -111,14 +111,14 @@ def load():
     save_path = pkg_path + '/Training/Saved Models/' + folder + algo
 
     env = gym.make('Quad-v2') 
-    check_env(env)
+    #check_env(env)
     env = Monitor(env, log_path, override_existing=False)
     env.seed(seed=seed)
 
-    model = TD3.load(save_path + '/TD34_WITHTILT_170000_steps', env)
-    #model.learn(total_timesteps=100000, progress_bar=True, callback=[checkpoint_callback, HParamCallback()], reset_num_timesteps=False, tb_log_name=algo)
+    model = TD3.load(save_path + '/TD34_WITHTILT_170000_steps', env) # if PID
+    model.learn(total_timesteps=100000)
 
-    mean_reward, std_reward = evaluate_policy(model=model, env=env, n_eval_episodes=1, return_episode_rewards=True)
+    #mean_reward, std_reward = evaluate_policy(model=model, env=env, n_eval_episodes=1, return_episode_rewards=True)
     #rospy.loginfo('mean_reward:{} std_reward:{}'.format(mean_reward,std_reward))
 
         
